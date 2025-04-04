@@ -1,0 +1,87 @@
+{
+  "author": "",
+  "category": "Third-party",
+  "extensionNamespace": "",
+  "fullName": "1SatOrdinals and BSV",
+  "gdevelopVersion": "",
+  "helpPath": "",
+  "iconUrl": "",
+  "name": "1SatOrdinalsBSV",
+  "previewIconUrl": "",
+  "shortDescription": "Adds easy management of 1SatOrdinals and BSV in your GDevelop game",
+  "version": "1.0.0-dev",
+  "description": "",
+  "tags": [
+    "ordinals",
+    "nfts",
+    "nft",
+    "ordinal",
+    "token",
+    "bsv",
+    "bitcoin sv",
+    "bitcoin",
+    "tokens",
+    "bsv20",
+    "bsv21"
+  ],
+  "authorIds": [
+    "Vu2ZkG9HyRchkjTdpXr4E3Fux7Q2"
+  ],
+  "dependencies": [],
+  "sourceFiles": [
+    {
+      "resourceName": "1satordinalsbsv.js",
+      "includePosition": "last"
+    }
+  ],
+  "globalVariables": [],
+  "sceneVariables": [],
+  "eventsFunctions": [
+    {
+      "async": true,
+      "description": "Checks if the specified address has a specific ordinal",
+      "fullName": "Address has ordinal",
+      "functionType": "Action",
+      "name": "Address_Ordinal_Check_Action",
+      "sentence": "Check if _PARAM1_ has _PARAM2_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const address = eventsFunctionContext.getArgument('address');",
+            "const origin = eventsFunctionContext.getArgument('origin');",
+            "/** @type {gdjs.Variable} */",
+            "const variable = eventsFunctionContext.getArgument('returnvar');",
+            "",
+            "return new gdjs.PromiseTask(window.ord.checkIfUserHasOrdinal(address, origin).then((result) => {",
+            "    variable.setValue(result);",
+            "}));"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Address",
+          "name": "address",
+          "type": "string"
+        },
+        {
+          "description": "Ordinal origin",
+          "name": "origin",
+          "type": "string"
+        },
+        {
+          "description": "Variable to store result in",
+          "name": "returnvar",
+          "type": "variable"
+        }
+      ],
+      "objectGroups": []
+    }
+  ],
+  "eventsBasedBehaviors": [],
+  "eventsBasedObjects": []
+}

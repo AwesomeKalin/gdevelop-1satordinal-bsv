@@ -1,0 +1,25 @@
+{
+  "name": "ordinals-gdevelop-extension",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@types/bun": "latest",
+    "@types/node": "^22.13.14",
+    "tslib": "^2.8.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@bsv/sdk": "^1.4.11",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "js-1sat-ord": "^0.1.80",
+    "rollup": "^4.37.0"
+  },
+  "scripts": {
+    "build": "rollup -c"
+  }
+}
