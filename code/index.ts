@@ -1,5 +1,5 @@
-import { PrivateKey, PublicKey } from "@bsv/sdk";
-import { fetchPayUtxos, fetchTokenUtxos, TokenType, type TokenUtxo, type Utxo } from 'js-1sat-ord';
+import { PrivateKey, PublicKey, Transaction } from "@bsv/sdk";
+import { fetchPayUtxos, fetchTokenUtxos, sendUtxos, TokenType, type ChangeResult, type TokenUtxo, type Utxo } from 'js-1sat-ord';
 
 const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<boolean> => {
     try {
@@ -21,7 +21,7 @@ const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<b
     } catch {
         return false;
     }
-}
+};
 
 const generatePrivateKey = (): string => {
     return PrivateKey.fromRandom().toWif();
@@ -29,15 +29,15 @@ const generatePrivateKey = (): string => {
 
 const privKeyToPubKey = (privKey: string): string => {
     return PrivateKey.fromWif(privKey).toPublicKey().toString();
-}
+};
 
 const privKeyToAddress = (privKey: string): string => {
     return PrivateKey.fromWif(privKey).toAddress();
-}
+};
 
 const pubKeyToAddress = (pubKey: string): string => {
     return PublicKey.fromString(pubKey).toAddress();
-}
+};
 
 const getBalanceInSats = async (address: string): Promise<number> => {
     const utxos: Utxo[] = await fetchPayUtxos(address);
@@ -48,7 +48,7 @@ const getBalanceInSats = async (address: string): Promise<number> => {
     });
 
     return balance;
-}
+};
 
 const getTokenBalance = async (address: string, token: string, tokenType: 'BSV20' | 'BSV21'): Promise<number> => {
     const tokenProtocol: TokenType = tokenType === 'BSV20' ? TokenType.BSV20 : TokenType.BSV21;
@@ -77,7 +77,21 @@ const getTokenBalance = async (address: string, token: string, tokenType: 'BSV20
     }
 
     return balance / Math.pow(10, decimals);
-}
+};
+
+const sendBsv = async (sats: number, privKey: string, toAddress: string): Promise<void> => {
+    const utxos: Utxo[] = await fetchPayUtxos(privKeyToAddress(privKey));
+    const key: PrivateKey = PrivateKey.fromWif(privKey);
+
+    const tx: Transaction = (await sendUtxos({
+        utxos,
+        paymentPk: key,
+        payments: [{to: toAddress, amount: sats}],
+        satsPerKb: 1,
+    })).tx;
+
+    await tx.broadcast();
+};
 
 (window as any).ord = {
     checkIfUserHasOrdinal,
@@ -87,4 +101,5 @@ const getTokenBalance = async (address: string, token: string, tokenType: 'BSV20
     pubKeyToAddress,
     getBalanceInSats,
     getTokenBalance,
+    sendBsv,
 };

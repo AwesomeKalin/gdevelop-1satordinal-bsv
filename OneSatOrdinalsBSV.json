@@ -283,6 +283,47 @@
         }
       ],
       "objectGroups": []
+    },
+    {
+      "async": true,
+      "description": "Send BSV to the specified address",
+      "fullName": "Send BSV",
+      "functionType": "Action",
+      "name": "Send_Bsv_Action",
+      "sentence": "Send _PARAM1_ sats to _PARAM2_ from Private Key _PARAM3_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const sats = eventsFunctionContext.getArgument('Sats');",
+            "const address = eventsFunctionContext.getArgument('Address');",
+            "const privKey = eventsFunctionContext.getArgument('PrivateKey');",
+            "",
+            "return new gdjs.PromiseTask(window.ord.sendBsv(sats, privKey, address));"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Number of sats to send. 1 sat = 10^-8 of a BSV",
+          "name": "Sats",
+          "type": "expression"
+        },
+        {
+          "description": "Address to send to",
+          "name": "Address",
+          "type": "string"
+        },
+        {
+          "description": "Private Key in WIF format to send from. Change will also be sent here",
+          "name": "PrivateKey",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
     }
   ],
   "eventsBasedBehaviors": [],
