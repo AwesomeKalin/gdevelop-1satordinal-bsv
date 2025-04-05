@@ -101,6 +101,99 @@
       },
       "parameters": [],
       "objectGroups": []
+    },
+    {
+      "description": "Returns the Public Key related to the Private Key in WIF passed",
+      "fullName": "Convert Private Key in WIF to Public Key",
+      "functionType": "StringExpression",
+      "name": "PrivateKey_To_PubKey",
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const privKey = eventsFunctionContext.getArgument('PrivateKey');",
+            "",
+            "eventsFunctionContext.returnValue = window.ord.privKeyToPubKey(privKey);"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "expressionType": {
+        "type": "string"
+      },
+      "parameters": [
+        {
+          "description": "Private Key in WIF",
+          "name": "PrivateKey",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Returns the Address related to the Private Key in WIF passed",
+      "fullName": "Convert Private Key in WIF to Address",
+      "functionType": "StringExpression",
+      "name": "PrivateKey_To_Address",
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const privKey = eventsFunctionContext.getArgument('PrivateKey');",
+            "",
+            "eventsFunctionContext.returnValue = window.ord.privKeyToAddress(privKey);"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "expressionType": {
+        "type": "string"
+      },
+      "parameters": [
+        {
+          "description": "Private Key in WIF",
+          "name": "PrivateKey",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Converts a Public Key to an Address",
+      "fullName": "Convert Public Key to Address",
+      "functionType": "StringExpression",
+      "name": "PubKey_To_Address",
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const pubkey = eventsFunctionContext.getArgument('PubKey');\r",
+            "\r",
+            "eventsFunctionContext.returnValue = window.ord.pubKeyToAddress(pubkey);"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "expressionType": {
+        "type": "string"
+      },
+      "parameters": [
+        {
+          "description": "Public Key",
+          "name": "PubKey",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
     }
   ],
   "eventsBasedBehaviors": [],
