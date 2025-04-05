@@ -194,6 +194,44 @@
         }
       ],
       "objectGroups": []
+    },
+    {
+      "async": true,
+      "description": "Gets the balance of the specified BSV address in sats",
+      "fullName": "Get Balance of Specified Address in Sats",
+      "functionType": "Action",
+      "name": "Get_Balance_Action",
+      "sentence": "Get Balance of _PARAM1_ and return to _PARAM2_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "/** @type {gdjs.Variable} */",
+            "const variable = eventsFunctionContext.getArgument('ReturnTo');",
+            "const address = eventsFunctionContext.getArgument('Address');",
+            "",
+            "return new gdjs.PromiseTask(window.ord.getBalanceInSats(address).then((balance) => {",
+            "    variable.setNumber(balance);",
+            "}));"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Address",
+          "name": "Address",
+          "type": "string"
+        },
+        {
+          "description": "Return Var",
+          "name": "ReturnTo",
+          "type": "variable"
+        }
+      ],
+      "objectGroups": []
     }
   ],
   "eventsBasedBehaviors": [],

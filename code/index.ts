@@ -1,4 +1,5 @@
 import { PrivateKey, PublicKey } from "@bsv/sdk";
+import { fetchPayUtxos, type Utxo } from 'js-1sat-ord';
 
 const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<boolean> => {
     try {
@@ -38,10 +39,22 @@ const pubKeyToAddress = (pubKey: string): string => {
     return PublicKey.fromString(pubKey).toAddress();
 }
 
+const getBalanceInSats = async (address: string): Promise<number> => {
+    const utxos: Utxo[] = await fetchPayUtxos(address);
+    let balance: number = 0;
+
+    utxos.forEach((utxo: Utxo) => {
+        balance += utxo.satoshis;
+    });
+
+    return balance;
+}
+
 (window as any).ord = {
     checkIfUserHasOrdinal,
     generatePrivateKey,
     privKeyToPubKey,
     privKeyToAddress,
     pubKeyToAddress,
+    getBalanceInSats,
 };
