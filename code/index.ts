@@ -1,3 +1,5 @@
+import { PrivateKey } from "@bsv/sdk";
+
 const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<boolean> => {
     try {
         try {
@@ -20,6 +22,11 @@ const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<b
     }
 }
 
+const generatePrivateKey = (): string => {
+    return PrivateKey.fromRandom().toWif();
+}
+
 (window as any).ord = {
-    checkIfUserHasOrdinal
+    checkIfUserHasOrdinal,
+    generatePrivateKey,
 };

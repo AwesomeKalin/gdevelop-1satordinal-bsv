@@ -6,7 +6,7 @@
   "gdevelopVersion": "",
   "helpPath": "",
   "iconUrl": "",
-  "name": "1SatOrdinalsBSV",
+  "name": "OneSatOrdinalsBSV",
   "previewIconUrl": "",
   "shortDescription": "Adds easy management of 1SatOrdinals and BSV in your GDevelop game",
   "version": "1.0.0-dev",
@@ -79,6 +79,27 @@
           "type": "variable"
         }
       ],
+      "objectGroups": []
+    },
+    {
+      "description": "Generates a private key in the Wallet Import Format",
+      "fullName": "Generate WIF",
+      "functionType": "StringExpression",
+      "name": "Generate_WIF",
+      "sentence": "Generate a Private Key in WIF Format",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "eventsFunctionContext.returnValue = window.ord.generatePrivateKey();",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "expressionType": {
+        "type": "string"
+      },
+      "parameters": [],
       "objectGroups": []
     }
   ],
