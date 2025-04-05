@@ -232,6 +232,57 @@
         }
       ],
       "objectGroups": []
+    },
+    {
+      "async": true,
+      "description": "Allows you to get the balance of any BSV20/21 token that a user holds",
+      "fullName": "Get balance of BSV20/21 token",
+      "functionType": "Action",
+      "name": "Get_Token_Balance_Action",
+      "sentence": "Get balance of token _PARAM1_ held by _PARAM2_ which is a _PARAM3_ and return result to _PARAM4_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const tokenId = eventsFunctionContext.getArgument('TokenID');",
+            "const address = eventsFunctionContext.getArgument('Address');",
+            "const tokenType = eventsFunctionContext.getArgument('TokenType');",
+            "/** @type {gdjs.Variable} */",
+            "const returnVar = eventsFunctionContext.getArgument('ReturnTo');",
+            "",
+            "return new gdjs.PromiseTask(window.ord.getTokenBalance(address, tokenId, tokenType).then((balance) => {",
+            "    returnVar.setNumber(balance);",
+            "}));"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Token Origin or Ticker (for BSV20)",
+          "name": "TokenID",
+          "type": "string"
+        },
+        {
+          "description": "Address to check balance of",
+          "name": "Address",
+          "type": "string"
+        },
+        {
+          "description": "The type of token it is",
+          "name": "TokenType",
+          "supplementaryInformation": "[\"BSV20\",\"BSV21\"]",
+          "type": "stringWithSelector"
+        },
+        {
+          "description": "Return Variable",
+          "name": "ReturnTo",
+          "type": "variable"
+        }
+      ],
+      "objectGroups": []
     }
   ],
   "eventsBasedBehaviors": [],

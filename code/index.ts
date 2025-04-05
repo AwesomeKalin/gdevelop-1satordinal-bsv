@@ -1,5 +1,5 @@
 import { PrivateKey, PublicKey } from "@bsv/sdk";
-import { fetchPayUtxos, type Utxo } from 'js-1sat-ord';
+import { fetchPayUtxos, fetchTokenUtxos, TokenType, type TokenUtxo, type Utxo } from 'js-1sat-ord';
 
 const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<boolean> => {
     try {
@@ -50,6 +50,35 @@ const getBalanceInSats = async (address: string): Promise<number> => {
     return balance;
 }
 
+const getTokenBalance = async (address: string, token: string, tokenType: 'BSV20' | 'BSV21'): Promise<number> => {
+    const tokenProtocol: TokenType = tokenType === 'BSV20' ? TokenType.BSV20 : TokenType.BSV21;
+    const tokenUtxos: TokenUtxo[] = await fetchTokenUtxos(tokenProtocol, token, address, 100);
+
+    let repetitions: number = 1;
+
+    while (tokenUtxos.length === repetitions * 100) {
+        const newTokenUtxos: TokenUtxo[] = await fetchTokenUtxos(tokenProtocol, token, address, 100, repetitions * 100);
+        tokenUtxos.push(...newTokenUtxos);
+        repetitions++;
+    }
+
+    let balance: number = 0;
+
+    tokenUtxos.forEach((utxo: TokenUtxo) => {
+        balance += +utxo.amt;
+    });
+
+    let decimals: number;
+
+    if (tokenType === 'BSV20') {
+        decimals = (await (await fetch(`https://ordinals.gorillapool.io/api/bsv20/tick/${token}`)).json()).dec;
+    } else {
+        decimals = (await (await fetch(`https://ordinals.gorillapool.io/api/bsv20/id/${token}`)).json()).dec;
+    }
+
+    return balance / Math.pow(10, decimals);
+}
+
 (window as any).ord = {
     checkIfUserHasOrdinal,
     generatePrivateKey,
@@ -57,4 +86,5 @@ const getBalanceInSats = async (address: string): Promise<number> => {
     privKeyToAddress,
     pubKeyToAddress,
     getBalanceInSats,
+    getTokenBalance,
 };
