@@ -55,6 +55,7 @@
             "",
             "return new gdjs.PromiseTask(window.ord.checkIfUserHasOrdinal(address, origin).then((result) => {",
             "    variable.setValue(result);",
+            "    eventsFunctionContext.task.resolve();",
             "}));"
           ],
           "parameterObjects": "",
@@ -212,6 +213,7 @@
             "",
             "return new gdjs.PromiseTask(window.ord.getBalanceInSats(address).then((balance) => {",
             "    variable.setNumber(balance);",
+            "    eventsFunctionContext.task.resolve();",
             "}));"
           ],
           "parameterObjects": "",
@@ -252,6 +254,7 @@
             "",
             "return new gdjs.PromiseTask(window.ord.getTokenBalance(address, tokenId, tokenType).then((balance) => {",
             "    returnVar.setNumber(balance);",
+            "    eventsFunctionContext.task.resolve();",
             "}));"
           ],
           "parameterObjects": "",
@@ -299,7 +302,9 @@
             "const address = eventsFunctionContext.getArgument('Address');",
             "const privKey = eventsFunctionContext.getArgument('PrivateKey');",
             "",
-            "return new gdjs.PromiseTask(window.ord.sendBsv(sats, privKey, address));"
+            "return new gdjs.PromiseTask(window.ord.sendBsv(sats, privKey, address).then(() => {",
+            "    eventsFunctionContext.task.resolve();",
+            "}));"
           ],
           "parameterObjects": "",
           "useStrict": true,
@@ -320,6 +325,68 @@
         {
           "description": "Private Key in WIF format to send from. Change will also be sent here",
           "name": "PrivateKey",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "async": true,
+      "description": "Send a BSV20/21 token to the specified address",
+      "fullName": "Send BSV20/21 token",
+      "functionType": "Action",
+      "name": "Send_Token_Action",
+      "sentence": "Send _PARAM1_ of token _PARAM2_ of type _PARAM3_  from Private Key _PARAM4_ funded by _PARAM5_ to _PARAM6_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const tokenAmount = eventsFunctionContext.getArgument('TokenAmount');",
+            "const tokenId = eventsFunctionContext.getArgument('TokenId');",
+            "const tokenType = eventsFunctionContext.getArgument('TokenType');",
+            "const privKey = eventsFunctionContext.getArgument('PrivKey');",
+            "const fundPrivKey = eventsFunctionContext.getArgument('FundPrivKey');",
+            "const toAddress = eventsFunctionContext.getArgument('ToAddress');",
+            "",
+            "return new gdjs.PromiseTask(window.ord.sendToken(tokenAmount, tokenId, privKey, fundPrivKey, toAddress, tokenType).then(() => {",
+            "    eventsFunctionContext.task.resolve();",
+            "}));"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Token Amount, with decimals if you wish to send fractional amounts",
+          "name": "TokenAmount",
+          "type": "expression"
+        },
+        {
+          "description": "Token ID or Ticker (for BSV20) of the token you wish to send",
+          "name": "TokenId",
+          "type": "string"
+        },
+        {
+          "description": "The type of token it is",
+          "name": "TokenType",
+          "supplementaryInformation": "[\"BSV20\",\"BSV21\"]",
+          "type": "stringWithSelector"
+        },
+        {
+          "description": "Private Key of address that has the token you wish to send",
+          "name": "PrivKey",
+          "type": "string"
+        },
+        {
+          "description": "Private Key of address that will be funding transaction fees",
+          "name": "FundPrivKey",
+          "type": "string"
+        },
+        {
+          "description": "Address that tokens will be sent to",
+          "name": "ToAddress",
           "type": "string"
         }
       ],

@@ -1,5 +1,5 @@
 import { PrivateKey, PublicKey, Transaction } from "@bsv/sdk";
-import { fetchPayUtxos, fetchTokenUtxos, sendUtxos, TokenType, type ChangeResult, type TokenUtxo, type Utxo } from 'js-1sat-ord';
+import { fetchPayUtxos, fetchTokenUtxos, sendUtxos, TokenType, transferOrdTokens, type ChangeResult, type TokenUtxo, type Utxo } from 'js-1sat-ord';
 
 const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<boolean> => {
     try {
@@ -50,6 +50,18 @@ const getBalanceInSats = async (address: string): Promise<number> => {
     return balance;
 };
 
+const decimals = async (token: string, tokenType: 'BSV20' | 'BSV21'): Promise<number> => {
+    let decimals: number;
+
+    if (tokenType === 'BSV20') {
+        decimals = (await (await fetch(`https://ordinals.gorillapool.io/api/bsv20/tick/${token}`)).json()).dec;
+    } else {
+        decimals = (await (await fetch(`https://ordinals.gorillapool.io/api/bsv20/id/${token}`)).json()).dec;
+    }
+
+    return decimals;
+}
+
 const getTokenBalance = async (address: string, token: string, tokenType: 'BSV20' | 'BSV21'): Promise<number> => {
     const tokenProtocol: TokenType = tokenType === 'BSV20' ? TokenType.BSV20 : TokenType.BSV21;
     const tokenUtxos: TokenUtxo[] = await fetchTokenUtxos(tokenProtocol, token, address, 100);
@@ -67,16 +79,8 @@ const getTokenBalance = async (address: string, token: string, tokenType: 'BSV20
     tokenUtxos.forEach((utxo: TokenUtxo) => {
         balance += +utxo.amt;
     });
-
-    let decimals: number;
-
-    if (tokenType === 'BSV20') {
-        decimals = (await (await fetch(`https://ordinals.gorillapool.io/api/bsv20/tick/${token}`)).json()).dec;
-    } else {
-        decimals = (await (await fetch(`https://ordinals.gorillapool.io/api/bsv20/id/${token}`)).json()).dec;
-    }
-
-    return balance / Math.pow(10, decimals);
+    
+    return balance / Math.pow(10, await decimals(token, tokenType));
 };
 
 const sendBsv = async (sats: number, privKey: string, toAddress: string): Promise<void> => {
@@ -93,6 +97,22 @@ const sendBsv = async (sats: number, privKey: string, toAddress: string): Promis
     await tx.broadcast();
 };
 
+const sendToken = async (tokenAmount: number, tokenID: string, privKey: string, fundPrivKey: string, toAddress: string, tokenProtocol: 'BSV20' | 'BSV21'): Promise<void> => {
+    const tx: Transaction = (await transferOrdTokens({
+        protocol: tokenProtocol === 'BSV20' ? TokenType.BSV20 : TokenType.BSV21,
+        tokenID,
+        decimals: await decimals(tokenID, tokenProtocol),
+        utxos: await fetchPayUtxos(privKeyToAddress(fundPrivKey)),
+        inputTokens: await fetchTokenUtxos(tokenProtocol === 'BSV20' ? TokenType.BSV20 : TokenType.BSV21, tokenID, privKeyToAddress(privKey)),
+        distributions: [{address: toAddress, tokens: tokenAmount * Math.pow(10, await decimals(tokenID, tokenProtocol))}],
+        satsPerKb: 1,
+        paymentPk: PrivateKey.fromWif(fundPrivKey),
+        ordPk: PrivateKey.fromWif(privKey),
+    })).tx;
+
+    await tx.broadcast();
+};
+
 (window as any).ord = {
     checkIfUserHasOrdinal,
     generatePrivateKey,
@@ -102,4 +122,5 @@ const sendBsv = async (sats: number, privKey: string, toAddress: string): Promis
     getBalanceInSats,
     getTokenBalance,
     sendBsv,
+    sendToken,
 };
