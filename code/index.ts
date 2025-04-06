@@ -1,10 +1,10 @@
 import { PrivateKey, PublicKey, Transaction } from "@bsv/sdk";
-import { fetchPayUtxos, fetchTokenUtxos, sendUtxos, TokenType, transferOrdTokens, type ChangeResult, type TokenUtxo, type Utxo } from 'js-1sat-ord';
+import { fetchPayUtxos, fetchTokenUtxos, sendOrdinals, sendUtxos, TokenType, transferOrdTokens, type TokenUtxo, type Utxo } from 'js-1sat-ord';
 
 const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<boolean> => {
     try {
         try {
-            const response = await fetch(`https://ordinals.gorillapool.io/api/inscriptions/${origin}/latest`)
+            const response = await fetch(`https://ordinals.gorillapool.io/api/inscriptions/${origin}/latest`);
             if (response.status !== 200) {
                 throw new Error('Failed to fetch data from GorilaPool API');
             }
@@ -113,6 +113,54 @@ const sendToken = async (tokenAmount: number, tokenID: string, privKey: string, 
     await tx.broadcast();
 };
 
+const getLatestFromOutpoint = async (outpoint: string): Promise<string> => {
+    try {
+        const response = await fetch(`https://ordinals.gorillapool.io/api/inscriptions/${origin}/latest`);
+        if (response.status !== 200) {
+            throw new Error('Failed to fetch data from GorilaPool API');
+        }
+
+        return (await response.json()).outpoint;
+    } catch {
+        throw new Error('Failed to fetch data from GorilaPool API');
+    }
+};
+
+const fetchScript = async (outpoint: string): Promise<string> => {
+    try {
+        const response = await fetch(`https://ordinals.gorillapool.io/api/txos/${outpoint}?script=true`);
+        if (response.status !== 200) {
+            throw new Error('Failed to fetch data from GorilaPool API');
+        }
+
+        return (await response.json()).script;
+    } catch {
+        throw new Error('Failed to fetch data from GorilaPool API');
+    }
+};
+
+const sendOrdinal = async (privKey: string, fundPrivKey: string, toAddress: string, ordinalOutpoint: string): Promise<void> => {
+    const tx: Transaction = (await sendOrdinals({
+        paymentUtxos: await fetchPayUtxos(privKeyToAddress(fundPrivKey)),
+        paymentPk: PrivateKey.fromWif(fundPrivKey),
+        satsPerKb: 1,
+        ordPk: PrivateKey.fromWif(privKey),
+        ordinals: [{
+            satoshis: 1,
+            txid: (await getLatestFromOutpoint(ordinalOutpoint)).slice(0, 64),
+            vout: +(await getLatestFromOutpoint(ordinalOutpoint)).slice(65),
+            script: await fetchScript(await getLatestFromOutpoint(ordinalOutpoint)),
+        }],
+        destinations: [{address: toAddress}],
+    })).tx;
+
+    await tx.broadcast();
+};
+
+const getBSVPrice = async (): Promise<number> => {
+    return (await (await fetch('https://api.whatsonchain.com/v1/bsv/main/exchangerate')).json()).rate;
+};
+
 (window as any).ord = {
     checkIfUserHasOrdinal,
     generatePrivateKey,
@@ -123,4 +171,6 @@ const sendToken = async (tokenAmount: number, tokenID: string, privKey: string, 
     getTokenBalance,
     sendBsv,
     sendToken,
+    sendOrdinal,
+    getBSVPrice,
 };

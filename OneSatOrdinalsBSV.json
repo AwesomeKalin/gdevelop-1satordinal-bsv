@@ -391,6 +391,88 @@
         }
       ],
       "objectGroups": []
+    },
+    {
+      "async": true,
+      "description": "Sends an ordinal to the specified address",
+      "fullName": "Send Ordinal to Specified Address",
+      "functionType": "Action",
+      "name": "Send_Ord_Action",
+      "sentence": "Send _PARAM1_ to _PARAM2_ from _PARAM3_ funded by _PARAM4_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const outpoint = eventsFunctionContext.getArgument('Outpoint');",
+            "const toAddress = eventsFunctionContext.getArgument('ToAddress');",
+            "const privKey = eventsFunctionContext.getArgument('PrivKey');",
+            "const fundPriv = eventsFunctionContext.getArgument('FundPriv');",
+            "",
+            "return new gdjs.PromiseTask(window.ord.sendOrdinal(privKey, fundPriv, toAddress, outpoint).then(() => {",
+            "    eventsFunctionContext.task.resolve();",
+            "}));"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Ordinal Outpoint",
+          "name": "Outpoint",
+          "type": "string"
+        },
+        {
+          "description": "Address to send ordinal to",
+          "name": "ToAddress",
+          "type": "string"
+        },
+        {
+          "description": "Private Key in WIF of the wallet that has the ordinal",
+          "name": "PrivKey",
+          "type": "string"
+        },
+        {
+          "description": "Private Key in WIF that will fund the transaction",
+          "name": "FundPriv",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "async": true,
+      "description": "Gets the current exchange rate of BSV, in USD",
+      "fullName": "Get BSV Price",
+      "functionType": "Action",
+      "name": "Get_BSV_Price_Action",
+      "sentence": "Get BSV price and save result to _PARAM1_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "/** @type {gdjs.Variable} */\r",
+            "const saveTo = eventsFunctionContext.getArgument('SaveTo');\r",
+            "\r",
+            "return new gdjs.PromiseTask(window.ord.getBSVPrice().then((price) => {\r",
+            "    saveTo.setNumber(price);\r",
+            "    eventsFunctionContext.task.resolve();\r",
+            "}));"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Variable to save result to",
+          "name": "SaveTo",
+          "type": "variable"
+        }
+      ],
+      "objectGroups": []
     }
   ],
   "eventsBasedBehaviors": [],
