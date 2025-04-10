@@ -1,5 +1,5 @@
-import { PrivateKey, PublicKey, Transaction } from "@bsv/sdk";
-import { fetchPayUtxos, fetchTokenUtxos, sendOrdinals, sendUtxos, TokenType, transferOrdTokens, type TokenUtxo, type Utxo } from 'js-1sat-ord';
+import { PrivateKey, PublicKey, Signature, Transaction } from "@bsv/sdk";
+import { fetchNftUtxos, fetchPayUtxos, fetchTokenUtxos, sendOrdinals, sendUtxos, TokenType, transferOrdTokens, type NftUtxo, type TokenUtxo, type Utxo } from 'js-1sat-ord';
 
 const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<boolean> => {
     try {
@@ -161,6 +161,40 @@ const getBSVPrice = async (): Promise<number> => {
     return (await (await fetch('https://api.whatsonchain.com/v1/bsv/main/exchangerate')).json()).rate;
 };
 
+const getOwnedOrdinals = async (address: string, limit: number, offset: number, collectionId?: string): Promise<string[]> => {
+    const ordinalUtxos: NftUtxo[] = await fetchNftUtxos(address, collectionId, limit, offset);
+    let ordinalOrigin: string[] = [];
+
+    ordinalUtxos.forEach((utxo: NftUtxo) => {
+        ordinalOrigin.push(utxo.origin);
+    });
+
+    return ordinalOrigin;
+};
+
+const createSignature = (message: string, privKey: string): string => {
+    const key: PrivateKey = PrivateKey.fromWif(privKey);
+    //@ts-expect-error When set to base64, always returns a string
+    const sig: string = key.sign(message).toString('base64');
+    return sig;
+};
+
+const verifySignature = (message: string, signature: string, pubKey: string): boolean => {
+    const key: PublicKey = PublicKey.fromString(pubKey);
+    return Signature.fromDER(signature, 'base64').verify(message, key);
+};
+
+const getCollectionOrdinals = async (collectionId: string, limit: number, offset: number, type: 'items' | 'market'): Promise<string[]> => {
+    const collectionData: any[] = await (await fetch(`https://api.1sat.market/collection/${collectionId}/${type}?limit=${limit}&offset=${offset}`)).json();
+    let outpoints: string[] = [];
+
+    collectionData.forEach((item: any) => {
+        outpoints.push(item.outpoint);
+    });
+
+    return outpoints;
+};
+
 (window as any).ord = {
     checkIfUserHasOrdinal,
     generatePrivateKey,
@@ -173,4 +207,8 @@ const getBSVPrice = async (): Promise<number> => {
     sendToken,
     sendOrdinal,
     getBSVPrice,
+    getOwnedOrdinals,
+    createSignature,
+    verifySignature,
+    getCollectionOrdinals,
 };
