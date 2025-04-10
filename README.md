@@ -1,6 +1,6 @@
 # 1SatOrdinals and BSV Extension for GDevelop
 
-This is a WIP extension to develop ordinal and blockchain games with GDevelop. It still has many features planned and is not feature complete,but please don't hesitate to ask for features! Here is the current list of features:
+This is a GDevelop extension to develop ordinal and blockchain games with GDevelop. Here is the current list of features:
 
 - Checking is a wallet has a specific ordinal
 - Generating Private Keys
