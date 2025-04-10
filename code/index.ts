@@ -80,7 +80,7 @@ const getTokenBalance = async (address: string, token: string, tokenType: 'BSV20
     tokenUtxos.forEach((utxo: TokenUtxo) => {
         balance += +utxo.amt;
     });
-    
+
     return balance / Math.pow(10, await decimals(token, tokenType));
 };
 
@@ -91,7 +91,7 @@ const sendBsv = async (sats: number, privKey: string, toAddress: string): Promis
     const tx: Transaction = (await sendUtxos({
         utxos,
         paymentPk: key,
-        payments: [{to: toAddress, amount: sats}],
+        payments: [{ to: toAddress, amount: sats }],
         satsPerKb: 1,
     })).tx;
 
@@ -105,7 +105,7 @@ const sendToken = async (tokenAmount: number, tokenID: string, privKey: string, 
         decimals: await decimals(tokenID, tokenProtocol),
         utxos: await fetchPayUtxos(privKeyToAddress(fundPrivKey)),
         inputTokens: await fetchTokenUtxos(tokenProtocol === 'BSV20' ? TokenType.BSV20 : TokenType.BSV21, tokenID, privKeyToAddress(privKey)),
-        distributions: [{address: toAddress, tokens: tokenAmount * Math.pow(10, await decimals(tokenID, tokenProtocol))}],
+        distributions: [{ address: toAddress, tokens: tokenAmount * Math.pow(10, await decimals(tokenID, tokenProtocol)) }],
         satsPerKb: 1,
         paymentPk: PrivateKey.fromWif(fundPrivKey),
         ordPk: PrivateKey.fromWif(privKey),
@@ -152,7 +152,7 @@ const sendOrdinal = async (privKey: string, fundPrivKey: string, toAddress: stri
             vout: +(await getLatestFromOutpoint(ordinalOutpoint)).slice(65),
             script: await fetchScript(await getLatestFromOutpoint(ordinalOutpoint)),
         }],
-        destinations: [{address: toAddress}],
+        destinations: [{ address: toAddress }],
     })).tx;
 
     await tx.broadcast();
@@ -202,6 +202,33 @@ const checkIfAddressHasOrdInCollection = async (address: string, collectionId: s
     return ordUtxos.length > 0;
 };
 
+const getOrdPrice = async (outpoint: string): Promise<number> => {
+    try {
+        const latest = await fetch(`https://ordinals.gorillapool.io/api/inscriptions/${outpoint}/latest`);
+        if (latest.status !== 200) {
+            throw new Error('Failed to fetch data from GorilaPool API');
+        }
+            
+        const latestData = await latest.json();
+
+        if (latestData.data?.list === undefined) return 0;
+        return latestData.data?.list.price;
+    } catch {
+        const current = await (await fetch(`https://ordinals.gorillapool.io/api/inscriptions/${outpoint}`)).json();
+        
+        if (current.data?.list === undefined) return 0;
+        return current.data?.list.price;
+    }
+};
+
+const isOrdSigValid = async (outpoint: string): Promise<boolean> => {
+    const data = await (await fetch(`https://ordinals.gorillapool.io/api/inscriptions/${outpoint}`)).json();
+
+    if (data.origin.data.sigma === undefined) return false;  
+
+    return data.origin.data.sigma[0].isValid;
+};
+
 (window as any).ord = {
     checkIfUserHasOrdinal,
     generatePrivateKey,
@@ -219,4 +246,6 @@ const checkIfAddressHasOrdInCollection = async (address: string, collectionId: s
     verifySignature,
     getCollectionOrdinals,
     checkIfAddressHasOrdInCollection,
+    getOrdPrice,
+    isOrdSigValid,
 };

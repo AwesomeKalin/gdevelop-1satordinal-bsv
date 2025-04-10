@@ -14,6 +14,7 @@ This is a WIP extension to develop ordinal and blockchain games with GDevelop. I
 - Signatures
 - Getting stuff in collections
 - Checking if user has ordinal in collection
+- Setting sprites and resources to ordinals
 
 ### Planned Features
 
