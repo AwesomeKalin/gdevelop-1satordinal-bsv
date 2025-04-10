@@ -1,5 +1,5 @@
 import { PrivateKey, PublicKey, Signature, Transaction } from "@bsv/sdk";
-import { fetchNftUtxos, fetchPayUtxos, fetchTokenUtxos, sendOrdinals, sendUtxos, TokenType, transferOrdTokens, type NftUtxo, type TokenUtxo, type Utxo } from 'js-1sat-ord';
+import { cancelOrdListings, createOrdListings, fetchNftUtxos, fetchPayUtxos, fetchTokenUtxos, oneSatBroadcaster, purchaseOrdListing, RoytaltyType, sendOrdinals, sendUtxos, TokenType, transferOrdTokens, type NftUtxo, type Royalty, type TokenUtxo, type Utxo } from 'js-1sat-ord';
 import { fetchNftUtxosNoLimit } from "./utxo";
 
 const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<boolean> => {
@@ -95,7 +95,7 @@ const sendBsv = async (sats: number, privKey: string, toAddress: string): Promis
         satsPerKb: 1,
     })).tx;
 
-    await tx.broadcast();
+    await tx.broadcast(oneSatBroadcaster());
 };
 
 const sendToken = async (tokenAmount: number, tokenID: string, privKey: string, fundPrivKey: string, toAddress: string, tokenProtocol: 'BSV20' | 'BSV21'): Promise<void> => {
@@ -111,7 +111,7 @@ const sendToken = async (tokenAmount: number, tokenID: string, privKey: string, 
         ordPk: PrivateKey.fromWif(privKey),
     })).tx;
 
-    await tx.broadcast();
+    await tx.broadcast(oneSatBroadcaster());
 };
 
 const getLatestFromOutpoint = async (outpoint: string): Promise<string> => {
@@ -155,7 +155,7 @@ const sendOrdinal = async (privKey: string, fundPrivKey: string, toAddress: stri
         destinations: [{ address: toAddress }],
     })).tx;
 
-    await tx.broadcast();
+    await tx.broadcast(oneSatBroadcaster());
 };
 
 const getBSVPrice = async (): Promise<number> => {
@@ -208,14 +208,14 @@ const getOrdPrice = async (outpoint: string): Promise<number> => {
         if (latest.status !== 200) {
             throw new Error('Failed to fetch data from GorilaPool API');
         }
-            
+
         const latestData = await latest.json();
 
         if (latestData.data?.list === undefined) return 0;
         return latestData.data?.list.price;
     } catch {
         const current = await (await fetch(`https://ordinals.gorillapool.io/api/inscriptions/${outpoint}`)).json();
-        
+
         if (current.data?.list === undefined) return 0;
         return current.data?.list.price;
     }
@@ -224,9 +224,100 @@ const getOrdPrice = async (outpoint: string): Promise<number> => {
 const isOrdSigValid = async (outpoint: string): Promise<boolean> => {
     const data = await (await fetch(`https://ordinals.gorillapool.io/api/inscriptions/${outpoint}`)).json();
 
-    if (data.origin.data.sigma === undefined) return false;  
+    if (data.origin.data.sigma === undefined) return false;
 
     return data.origin.data.sigma[0].isValid;
+};
+
+const sellOnMarket = async (outpoint: string, price: number, privKey: string, fundPrivKey: string): Promise<void> => {
+    const tx: Transaction = (await createOrdListings({
+        listings: [{
+            payAddress: privKeyToAddress(fundPrivKey),
+            price,
+            ordAddress: privKeyToAddress(privKey),
+            listingUtxo: {
+                txid: outpoint.slice(0, 64),
+                vout: +outpoint.slice(65),
+                script: (await (await fetch(`https://ordinals.gorillapool.io/api/txos/${outpoint}?script=true`)).json()).script,
+                satoshis: 1,
+            }
+        }],
+        utxos: await fetchPayUtxos(privKeyToAddress(fundPrivKey)),
+        paymentPk: PrivateKey.fromWif(fundPrivKey),
+        ordPk: PrivateKey.fromWif(privKey),
+        satsPerKb: 1,
+    })).tx;
+
+    await tx.broadcast(oneSatBroadcaster());
+};
+
+const buyOnMarket = async (outpoint: string, receiveAddress: string, fundPrivKey: string, marketFeeAddress: string, marketFeePercent: number): Promise<void> => {
+    const royalties: any[] = JSON.parse((await (await fetch(`https://ordinals.gorillapool.io/api/inscriptions/${outpoint}`)).json()).origin.data.map.royalties);
+    let royaltiesArray: Royalty[] = [];
+
+    royaltiesArray.push({
+        type: RoytaltyType.Address,
+        destination: marketFeeAddress,
+        percentage: marketFeePercent.toString(),
+    });
+
+    royalties.forEach((royalty: any) => {
+        if (royalty.type === 'address') {
+            royaltiesArray.push({
+                type: RoytaltyType.Address,
+                destination: royalty.destination,
+                percentage: royalty.percentage,
+            });
+        } else if (royalty.type === 'paymail') {
+            royaltiesArray.push({
+                type: RoytaltyType.Paymail,
+                destination: royalty.destination,
+                percentage: royalty.percentage,
+            });
+        } else if (royalty.type === 'script') {
+            royaltiesArray.push({
+                type: RoytaltyType.Script,
+                destination: royalty.destination,
+                percentage: royalty.percentage,
+            });
+        }
+    });
+
+    const tx: Transaction = (await purchaseOrdListing({
+        listing: {
+            payout: receiveAddress,
+            listingUtxo: {
+                txid: outpoint.slice(0, 64),
+                vout: +outpoint.slice(65),
+                script: (await (await fetch(`https://ordinals.gorillapool.io/api/txos/${outpoint}?script=true`)).json()).script,
+                satoshis: 1,
+            }
+        },
+        utxos: await fetchPayUtxos(privKeyToAddress(fundPrivKey)),
+        paymentPk: PrivateKey.fromWif(fundPrivKey),
+        ordAddress: receiveAddress,
+        satsPerKb: 1,
+        royalties: royaltiesArray,
+    })).tx;
+
+    await tx.broadcast(oneSatBroadcaster());
+};
+
+const cancelMarketListing = async (outpoint: string, privKey: string, fundPrivKey: string): Promise<void> => {
+    const tx: Transaction = (await cancelOrdListings({
+        listingUtxos: [{
+            txid: outpoint.slice(0, 64),
+            vout: +outpoint.slice(65),
+            script: (await (await fetch(`https://ordinals.gorillapool.io/api/txos/${outpoint}?script=true`)).json()).script,
+            satoshis: 1,
+        }],
+        utxos: await fetchPayUtxos(privKeyToAddress(fundPrivKey)),
+        ordPk: PrivateKey.fromWif(privKey),
+        paymentPk: PrivateKey.fromWif(fundPrivKey),
+        satsPerKb: 1,
+    })).tx;
+
+    await tx.broadcast(oneSatBroadcaster());
 };
 
 (window as any).ord = {
@@ -248,4 +339,7 @@ const isOrdSigValid = async (outpoint: string): Promise<boolean> => {
     checkIfAddressHasOrdInCollection,
     getOrdPrice,
     isOrdSigValid,
+    sellOnMarket,
+    buyOnMarket,
+    cancelMarketListing,
 };

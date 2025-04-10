@@ -15,10 +15,11 @@ This is a WIP extension to develop ordinal and blockchain games with GDevelop. I
 - Getting stuff in collections
 - Checking if user has ordinal in collection
 - Setting sprites and resources to ordinals
+- Marketplace, both everything with an OrdLock and just from specific collections
 
 ### Planned Features
 
-- Marketplace, both everything with an OrdLock and just from specific collections
+- Got any suggestions? Please open an issue or tag me on Treechat!
 
 ## Installation
 
