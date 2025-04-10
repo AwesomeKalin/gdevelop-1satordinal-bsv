@@ -1,5 +1,6 @@
 import { PrivateKey, PublicKey, Signature, Transaction } from "@bsv/sdk";
 import { fetchNftUtxos, fetchPayUtxos, fetchTokenUtxos, sendOrdinals, sendUtxos, TokenType, transferOrdTokens, type NftUtxo, type TokenUtxo, type Utxo } from 'js-1sat-ord';
+import { fetchNftUtxosNoLimit } from "./utxo";
 
 const checkIfUserHasOrdinal = async (address: string, origin: string): Promise<boolean> => {
     try {
@@ -195,6 +196,12 @@ const getCollectionOrdinals = async (collectionId: string, limit: number, offset
     return outpoints;
 };
 
+const checkIfAddressHasOrdInCollection = async (address: string, collectionId: string): Promise<boolean> => {
+    const ordUtxos: NftUtxo[] = await fetchNftUtxosNoLimit(address, collectionId);
+
+    return ordUtxos.length > 0;
+};
+
 (window as any).ord = {
     checkIfUserHasOrdinal,
     generatePrivateKey,
@@ -211,4 +218,5 @@ const getCollectionOrdinals = async (collectionId: string, limit: number, offset
     createSignature,
     verifySignature,
     getCollectionOrdinals,
+    checkIfAddressHasOrdInCollection,
 };

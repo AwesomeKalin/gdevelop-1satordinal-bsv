@@ -13,10 +13,10 @@ This is a WIP extension to develop ordinal and blockchain games with GDevelop. I
 - Getting ordinals
 - Signatures
 - Getting stuff in collections
+- Checking if user has ordinal in collection
 
 ### Planned Features
 
-- Checking if user has ordinal in collection
 - Marketplace, both everything with an OrdLock and just from specific collections
 
 ## Installation
