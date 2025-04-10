@@ -10,17 +10,25 @@ This is a WIP extension to develop ordinal and blockchain games with GDevelop. I
 - Getting token balance
 - Sending BSV, Tokens and Ordinals
 - Getting BSV's Price in USD
+- Getting ordinals
+- Signatures
+- Getting stuff in collections
 
 ### Planned Features
 
-- Getting ordinals
 - Checking if user has ordinal in collection
 - Marketplace, both everything with an OrdLock and just from specific collections
 
 ## Installation
 
-Download 1satordinalsbsv.js and OneSatOrdinalsBSV.json. Go to the Resources page, open up the project folder, move 1satordinalsbsv.js into this folder, then open the context menu on any of your already existing assets, hover over "Scan in the project folder for" and click "JavaScript file". Then open the add extensions menu, click "Import Extension" and navigate to where you downloaded OneSatOrdinalsBSV.json and import it. You should now be able to use everything this extension has to offer!
+Download OneSatOrdinalsBSV.json. Then open the add extensions menu, click "Import Extension" and navigate to where you downloaded OneSatOrdinalsBSV.json and import it. You should now be able to use everything this extension has to offer!
+
+## Update
+
+Simply repeat the install instructions, and when it prompts you to replace, accept the prompt
 
 ## Credit
 
 Thank you to the Gorillapool team for making the ordinals API and WOC for the BSV price API and for the BSV-21 API which is partially used in this extension.
+
+Thank you to arthuro555 for the code for image loading, modified to work with ordinals

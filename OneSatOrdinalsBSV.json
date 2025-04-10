@@ -178,6 +178,42 @@
       "objectGroups": []
     },
     {
+      "description": "Replaces the image contained by a resource by a new one, from an ordinal outpoint. This will update all sprites displaying the resource.",
+      "fullName": "Load Ordinal into an image resource",
+      "functionType": "Action",
+      "name": "Load_Ordinal_Into_Image_Resource_Action",
+      "sentence": "Load Ordinal _PARAM1_ into resource _PARAM2_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "runtimeScene",
+            "    .getGame()",
+            "    .getImageManager()",
+            "    .getPIXITexture(eventsFunctionContext.getArgument(\"Resource\"))",
+            "    .baseTexture = PIXI.BaseTexture.from(`https://ordfs.network/content/${eventsFunctionContext.getArgument(\"Ordinal\")}`);",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "The URL to load the new image for the resource from",
+          "name": "URL",
+          "type": "string"
+        },
+        {
+          "description": "The resource to modify",
+          "name": "Resource",
+          "type": "imageResource"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
       "async": true,
       "description": "Allows you to get all ordinals in a collection, also allowing you to filter out those on sale. May cause issues with incredibly large collections. Retruns the outpoints",
       "fullName": "Get the ordinals in a collection",
@@ -234,6 +270,51 @@
           "description": "Get all ordinals (Yes) or just those for sale (No), still limited by the specified limit",
           "name": "GetAll",
           "optional": true,
+          "type": "yesorno"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Loads the specified ordinal into the specified sprite. This will only affect the sprite in question and only until the image in it is changed through its animation or another action, unless you also modify the resource.",
+      "fullName": "Load Ordinal into a Sprite",
+      "functionType": "Action",
+      "name": "Load_Ordinal_Into_Sprite_Action",
+      "sentence": "Load _PARAM1_ into _PARAM2_ (and into the corresponding resource: _PARAM3_)",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "if (eventsFunctionContext.getArgument(\"ChangeResource\")) {",
+            "    const texture = PIXI.BaseTexture.from(`https://ordfs.network/content/${eventsFunctionContext.getArgument(\"Ordinal\")}`);",
+            "    for (const obj of objects) obj.getRendererObject().texture.baseTexture = texture;",
+            "} else {",
+            "    const texture = PIXI.Texture.from(`https://ordfs.network/content/${eventsFunctionContext.getArgument(\"Ordinal\")}`);",
+            "    for (const obj of objects) obj.getRendererObject().texture = texture;",
+            "}",
+            ""
+          ],
+          "parameterObjects": "Object",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "The Ordinal's Outpoint that you wish to load.",
+          "name": "Ordinal",
+          "type": "string"
+        },
+        {
+          "description": "The sprite you wish to modify",
+          "name": "Object",
+          "supplementaryInformation": "Sprite",
+          "type": "objectList"
+        },
+        {
+          "description": "Modify the resource?",
+          "longDescription": "If yes, modifies the image contained in the resource of the sprite's current frame instead of just the sprite's displayed image. This makes the changes affect all other sprites that also display this resource, and allows the change to persist after changing animations or the current frame.",
+          "name": "ChangeResource",
           "type": "yesorno"
         }
       ],
