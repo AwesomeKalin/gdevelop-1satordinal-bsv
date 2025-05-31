@@ -8,9 +8,26 @@
   "iconUrl": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMy4wLjMsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iSWNvbnMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMzIgMzIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMyIDMyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9DQo8L3N0eWxlPg0KPGc+DQoJPHBhdGggZD0iTTE2LjUsMTVoLTFjLTAuMywwLTAuNS0wLjItMC41LTAuNXMwLjItMC41LDAuNS0wLjVIMTdjMC42LDAsMS0wLjQsMS0xcy0wLjQtMS0xLTFjMC0wLjYtMC40LTEtMS0xcy0xLDAuNC0xLDF2MC4xDQoJCWMtMS4xLDAuMi0yLDEuMi0yLDIuNGMwLDEuNCwxLjEsMi41LDIuNSwyLjVoMWMwLjMsMCwwLjUsMC4yLDAuNSwwLjVTMTYuOCwxOCwxNi41LDE4SDE1Yy0wLjYsMC0xLDAuNC0xLDFzMC40LDEsMSwxDQoJCWMwLDAuNiwwLjQsMSwxLDFzMS0wLjQsMS0xdi0wLjFjMS4xLTAuMiwyLTEuMiwyLTIuNEMxOSwxNi4xLDE3LjksMTUsMTYuNSwxNXoiLz4NCgk8cGF0aCBkPSJNMjkuNiwxMi43Yy0wLjEtMC41LTAuNi0wLjgtMS4xLTAuOGMtMS4yLDAuMi0yLjQtMC40LTMtMS41Yy0wLjYtMS0wLjUtMi40LDAuMi0zLjNjMC4zLTAuNCwwLjMtMS0wLjEtMS4zDQoJCUMyNCw0LjMsMjIuMSwzLjIsMjAsMi42Yy0wLjUtMC4xLTEsMC4xLTEuMiwwLjZDMTguMyw0LjMsMTcuMiw1LDE2LDVzLTIuMy0wLjctMi44LTEuOEMxMywyLjcsMTIuNSwyLjQsMTIsMi42DQoJCUM5LjksMy4yLDgsNC4zLDYuNCw1LjlDNiw2LjIsNiw2LjgsNi4zLDcuMmMwLjcsMSwwLjgsMi4zLDAuMiwzLjNjLTAuNiwxLTEuOCwxLjYtMywxLjVjLTAuNS0wLjEtMSwwLjMtMS4xLDAuOA0KCQlDMi4xLDEzLjgsMiwxNC45LDIsMTZzMC4xLDIuMiwwLjQsMy4zQzIuNSwxOS44LDMsMjAuMSwzLjUsMjBjMS4yLTAuMiwyLjQsMC40LDMsMS41YzAuNiwxLDAuNSwyLjQtMC4yLDMuMw0KCQljLTAuMywwLjQtMC4zLDEsMC4xLDEuM2MxLjYsMS41LDMuNiwyLjcsNS43LDMuM2MwLjUsMC4xLDEtMC4xLDEuMi0wLjZjMC41LTEuMSwxLjYtMS44LDIuOC0xLjhzMi4zLDAuNywyLjgsMS44DQoJCWMwLjIsMC40LDAuNSwwLjYsMC45LDAuNmMwLjEsMCwwLjIsMCwwLjMsMGMyLjEtMC42LDQuMS0xLjgsNS43LTMuM2MwLjQtMC40LDAuNC0wLjksMC4xLTEuM2MtMC43LTEtMC44LTIuMy0wLjItMy4zDQoJCWMwLjYtMSwxLjgtMS42LDMtMS41YzAuNSwwLjEsMS0wLjMsMS4xLTAuOGMwLjMtMS4xLDAuNC0yLjIsMC40LTMuM1MyOS45LDEzLjgsMjkuNiwxMi43eiBNMTYsMjRjLTQuNCwwLTgtMy42LTgtOHMzLjYtOCw4LTgNCgkJczgsMy42LDgsOFMyMC40LDI0LDE2LDI0eiIvPg0KPC9nPg0KPC9zdmc+DQo=",
   "name": "OneSatOrdinalsBSV",
   "previewIconUrl": "https://asset-resources.gdevelop.io/public-resources/Icons/Glyphster Pack/Master/SVG/Business and Finance/9ab2ee949a7cf27aaf3e1ffe6f90e753e289614d5ab58eee2386ecc0face81ff_Business and Finance_money_engine_gear.svg",
-  "shortDescription": "Adds easy management of 1SatOrdinals and BSV in your GDevelop game",
+  "shortDescription": "Adds easy management of 1SatOrdinals and BSV in your GDevelop game.",
   "version": "1.0.0",
-  "description": "Allows you to integrate 1SatOrdinals and BSV into your GDevelop game.",
+  "description": [
+    "Allows you to integrate 1SatOrdinals and BSV into your GDevelop game, as well as a few extra utilities, such as signing messages. Here is a full list of functionality:",
+    "",
+    "- Checking is a wallet has a specific ordinal",
+    "- Generating Private Keys",
+    "- Converting Private Keys to Public Keys and Addresses",
+    "- Converting Public Keys to Addresses",
+    "- Getting wallet balance",
+    "- Getting token balance",
+    "- Sending BSV, Tokens and Ordinals",
+    "- Getting BSV's Price in USD",
+    "- Getting ordinals",
+    "- Signatures",
+    "- Getting stuff in collections",
+    "- Checking if user has ordinal in collection",
+    "- Setting sprites and resources to ordinals",
+    "- Marketplace, both everything with an OrdLock and just from specific collections"
+  ],
   "tags": [
     "ordinals",
     "nfts",
@@ -44,8 +61,8 @@
   "eventsFunctions": [
     {
       "async": true,
-      "description": "Checks if the specified address has a specific ordinal",
-      "fullName": "Address has ordinal",
+      "description": "Checks if the specified address has a specific ordinal.",
+      "fullName": "Check if address has an ordinal",
       "functionType": "Action",
       "name": "Address_Ordinal_Check_Action",
       "sentence": "Check if _PARAM1_ has _PARAM2_",
@@ -88,8 +105,8 @@
       "objectGroups": []
     },
     {
-      "description": "Generates a private key in the Wallet Import Format",
-      "fullName": "Generate WIF",
+      "description": "Generates a private key in the Wallet Import Format.",
+      "fullName": "Generate a WIF",
       "functionType": "StringExpression",
       "name": "Generate_WIF",
       "sentence": "Generate a Private Key in WIF Format",
@@ -109,7 +126,7 @@
       "objectGroups": []
     },
     {
-      "description": "Returns a signature, in base64, with the specified private key. Useful for authentication and proving ownership over an address",
+      "description": "Returns a signature, in base64, with the specified private key. Useful for authentication and proving ownership over an address.",
       "fullName": "Create a signature with a private key",
       "functionType": "StringExpression",
       "name": "Create_Signature",
@@ -146,7 +163,7 @@
       "objectGroups": []
     },
     {
-      "description": "Allows you to verify whether a signature is created by a specific address, given its public key and the message. Returns 1 if true and 0 if false",
+      "description": "Allows you to verify whether a signature is created by a specific address, given its public key and the message. Returns 1 if true and 0 if false.",
       "fullName": "Verify a signature using a public key",
       "functionType": "Expression",
       "name": "Verify_Signature",
@@ -271,7 +288,7 @@
     },
     {
       "async": true,
-      "description": "Allows you to get all ordinals in a collection, also allowing you to filter out those on sale. May cause issues with incredibly large collections. Retruns the outpoints",
+      "description": "Allows you to get all ordinals in a collection, also allowing you to filter out those on sale. May cause issues with incredibly large collections. Returns the outpoints.",
       "fullName": "Get the ordinals in a collection",
       "functionType": "Action",
       "name": "Get_Ordinals_In_Collection_Action",
@@ -357,7 +374,7 @@
       ],
       "parameters": [
         {
-          "description": "The Ordinal's Outpoint that you wish to load.",
+          "description": "The Ordinal's Outpoint that you wish to load",
           "name": "Ordinal",
           "type": "string"
         },
@@ -395,7 +412,7 @@
     },
     {
       "async": true,
-      "description": "Allows you to sell an ordinal, using an ordlock smart contract",
+      "description": "Allows you to sell an ordinal, using an ordlock smart contract.",
       "fullName": "Sell an Ordinal with an OrdLock",
       "functionType": "Action",
       "name": "Sell_Ordinal_Action",
@@ -444,7 +461,7 @@
     },
     {
       "async": true,
-      "description": "Allows you to buy an ordinal locked in an ordlock",
+      "description": "Allows you to buy an ordinal locked in an ordlock.",
       "fullName": "Buy an ordinal locked in an ordlock",
       "functionType": "Action",
       "name": "Buy_Ordinal_Action",
@@ -491,7 +508,7 @@
     },
     {
       "async": true,
-      "description": "Cancels the sale of an ordinal in an ordlock",
+      "description": "Cancels the sale of an ordinal in an ordlock.",
       "fullName": "Cancel sale of ordinal",
       "functionType": "Action",
       "name": "Cancel_Ordinal_Sale_Action",
@@ -534,7 +551,7 @@
     },
     {
       "async": true,
-      "description": "Get the price of an ordinal, by inputting one of its outpoint, in sats",
+      "description": "Get the price of an ordinal, by inputting one of its outpoint, in sats.",
       "fullName": "Get Price of Ordinal",
       "functionType": "Action",
       "name": "Get_Ordinal_Price_Action",
@@ -573,7 +590,7 @@
     },
     {
       "async": true,
-      "description": "Checks if the SIGMA signature of an ordinal is valid",
+      "description": "Checks if the SIGMA signature of an ordinal is valid.",
       "fullName": "Check if a SIGMA signature is valid",
       "functionType": "Action",
       "name": "Is_Ordinal_Sigma_Signature_Valid_Action",
@@ -611,7 +628,7 @@
       "objectGroups": []
     },
     {
-      "description": "Set the address that marketplace fees will go to",
+      "description": "Set the address that marketplace fees will go to.",
       "fullName": "Set Marketplace Fee Address",
       "functionType": "Action",
       "name": "Set_Market_Fee_Address_Action",
@@ -644,7 +661,7 @@
       "objectGroups": []
     },
     {
-      "description": "Sets the marketplace fee percentage, as a decimal. Fees are added ontop of the sale price",
+      "description": "Sets the marketplace fee percentage, as a decimal. Fees are added ontop of the sale price.",
       "fullName": "Set Marketplace Fee Percentage",
       "functionType": "Action",
       "name": "Set_Market_Fee_Percent_Action",
@@ -677,7 +694,7 @@
       "objectGroups": []
     },
     {
-      "description": "Returns the Public Key related to the Private Key in WIF passed",
+      "description": "Returns the Public Key related to the Private Key in WIF passed.",
       "fullName": "Convert Private Key in WIF to Public Key",
       "functionType": "StringExpression",
       "name": "PrivateKey_To_PubKey",
@@ -708,7 +725,7 @@
       "objectGroups": []
     },
     {
-      "description": "Returns the Address related to the Private Key in WIF passed",
+      "description": "Returns the Address related to the Private Key in WIF passed.",
       "fullName": "Convert Private Key in WIF to Address",
       "functionType": "StringExpression",
       "name": "PrivateKey_To_Address",
@@ -739,7 +756,7 @@
       "objectGroups": []
     },
     {
-      "description": "Converts a Public Key to an Address",
+      "description": "Converts a Public Key to an Address.",
       "fullName": "Convert Public Key to Address",
       "functionType": "StringExpression",
       "name": "PubKey_To_Address",
@@ -771,7 +788,7 @@
     },
     {
       "async": true,
-      "description": "Gets the balance of the specified BSV address in sats",
+      "description": "Gets the balance of the specified BSV address in sats.",
       "fullName": "Get Balance of Specified Address in Sats",
       "functionType": "Action",
       "name": "Get_Balance_Action",
@@ -810,7 +827,7 @@
     },
     {
       "async": true,
-      "description": "Allows you to get the balance of any BSV20/21 token that a user holds",
+      "description": "Allows you to get the balance of any BSV20/21 token that a user holds.",
       "fullName": "Get balance of BSV20/21 token",
       "functionType": "Action",
       "name": "Get_Token_Balance_Action",
@@ -862,7 +879,7 @@
     },
     {
       "async": true,
-      "description": "Send BSV to the specified address",
+      "description": "Send BSV to the specified address.",
       "fullName": "Send BSV",
       "functionType": "Action",
       "name": "Send_Bsv_Action",
@@ -905,7 +922,7 @@
     },
     {
       "async": true,
-      "description": "Send a BSV20/21 token to the specified address",
+      "description": "Send a BSV20/21 token to the specified address.",
       "fullName": "Send BSV20/21 token",
       "functionType": "Action",
       "name": "Send_Token_Action",
@@ -967,7 +984,7 @@
     },
     {
       "async": true,
-      "description": "Sends an ordinal to the specified address",
+      "description": "Sends an ordinal to the specified address.",
       "fullName": "Send Ordinal to Specified Address",
       "functionType": "Action",
       "name": "Send_Ord_Action",
@@ -1016,7 +1033,7 @@
     },
     {
       "async": true,
-      "description": "Gets the current exchange rate of BSV, in USD",
+      "description": "Gets the current exchange rate of BSV, in USD.",
       "fullName": "Get BSV Price",
       "functionType": "Action",
       "name": "Get_BSV_Price_Action",
@@ -1049,7 +1066,7 @@
     },
     {
       "async": true,
-      "description": "Gets the origins of the ordinals that someone has in their wallet",
+      "description": "Gets the origins of the ordinals that someone has in their wallet.",
       "fullName": "Get the Ordinals that an address has",
       "functionType": "Action",
       "name": "Get_Owned_Ordinals_Action",
@@ -1100,7 +1117,7 @@
     },
     {
       "async": true,
-      "description": "Similar to \"Get the Ordinals that an address has\", exept you can specify a specific collection to only get ordinals from a specific collection",
+      "description": "Similar to \"Get the Ordinals that an address has\", exept you can specify a specific collection to only get ordinals from a specific collection.",
       "fullName": "Get the Ordinals that the specified address has in a specific collection",
       "functionType": "Action",
       "name": "Get_Owned_Ordinals_In_Collection_Action",
