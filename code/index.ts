@@ -320,6 +320,11 @@ const cancelMarketListing = async (outpoint: string, privKey: string, fundPrivKe
     await tx.broadcast(oneSatBroadcaster());
 };
 
+const getOrigin = async (outpoint: string): Promise<string> => {
+    const response = await fetch(`https://ordinals.gorillapool.io/api/txos/${outpoint}`);
+    return (await response.json()).origin.outpoint;
+};
+
 (window as any).ord = {
     checkIfUserHasOrdinal,
     generatePrivateKey,
@@ -342,4 +347,5 @@ const cancelMarketListing = async (outpoint: string, privKey: string, fundPrivKe
     sellOnMarket,
     buyOnMarket,
     cancelMarketListing,
+    getOrigin,
 };
